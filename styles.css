@@ -1,0 +1,119 @@
+/* Fonts */
+@font-face{
+  font-family: "Chaloops";
+  src: url("assets/fonts/Chaloops W00 Md Reg.woff2") format("woff2");
+  font-display: swap;
+}
+@font-face{
+  font-family: "Josefin Sans";
+  src: url("assets/fonts/JosefinSans-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 700;
+  font-display: swap;
+}
+
+:root{
+  --bg: #f7efe6;          /* warm paper beige */
+  --paper: #ffffff;
+  --ink: #3a2d4f;         /* muted plum (matches laptop/lines) */
+  --accent: #7ec7ea;      /* Birdie blue */
+  --accent-2:#f29b61;     /* warm tangerine (hoodie) */
+  --muted:#6f6682;        /* soft purple-gray */
+  --radius:16px;
+  --shadow:0 8px 24px rgba(58,45,79,.15);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:"Josefin Sans",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  color:var(--ink);
+  background:radial-gradient(1200px 700px at 25% -10%, #fff 0%, var(--bg) 55%, #efe5da 100%);
+  line-height:1.6;
+}
+
+/* Header */
+.site-header{
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 20px;background:rgba(255,255,255,.8);backdrop-filter:saturate(140%) blur(8px);
+  border-bottom:1px solid rgba(0,0,0,.04);
+}
+.brand{display:flex;gap:8px;align-items:center;text-decoration:none}
+.brand-birdie{font-size:24px}
+.brand-text{font-family:"Chaloops", cursive; font-size:22px; color:var(--ink)}
+.nav{display:flex;gap:16px; align-items:center}
+.nav a{color:var(--ink); text-decoration:none; padding:8px 10px; border-radius:10px}
+.nav a:hover{background:#eef5ff}
+.nav .cta{background:var(--accent); color:#00304d; font-weight:600}
+.nav .cta:hover{filter:brightness(1.05)}
+
+/* Hero */
+.hero{display:grid; grid-template-columns:1.2fr 1fr; gap:24px; align-items:center; padding:48px 20px; max-width:1100px; margin:0 auto}
+.hero-text h1{
+  font-family:"Chaloops", cursive; line-height:1.1; margin:0 0 12px; font-size:clamp(32px,5vw,56px);
+}
+.hero-text .skew{display:inline-block; transform:skew(-6deg)}
+.tagline{color:var(--muted); margin-bottom:20px}
+.hero-actions{display:flex; gap:12px; flex-wrap:wrap}
+.hero-art{margin:0; filter:drop-shadow(var(--shadow))}
+.hero-art img{width:100%; border-radius:var(--radius)}
+
+/* Floating facts bubbles */
+.floating-facts{position:absolute; inset:auto 10% 10% auto; display:flex; gap:12px; flex-direction:column}
+.fact{border:0; width:48px; height:48px; border-radius:50%; background:var(--accent-2); color:#592c00; font-weight:700; cursor:pointer; box-shadow:var(--shadow)}
+.fact:hover{transform:translateY(-2px)}
+
+/* Panels */
+.panel{padding:56px 20px; background:transparent}
+.panel.alt{background:linear-gradient(180deg, #fff 0%, #f3f8ff 100%)}
+.panel-inner{max-width:1000px; margin:0 auto}
+h2{font-family:"Chaloops", cursive; font-size:clamp(28px,3.2vw,40px); margin:0 0 16px}
+.details summary{cursor:pointer}
+.gallery{display:grid; grid-template-columns:1fr; gap:12px}
+.gallery img{width:100%; border-radius:var(--radius); box-shadow:var(--shadow)}
+
+/* Cards */
+.cards{list-style:none; margin:0; padding:0; display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.card{background:var(--paper); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow)}
+.card h3{margin:0 0 6px; font-size:20px; font-weight:700}
+
+/* Buttons */
+.btn{display:inline-block; padding:10px 14px; border-radius:12px; text-decoration:none; border:1px solid rgba(0,0,0,.08); background:#fff; color:var(--ink); cursor:pointer}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary{background:var(--accent); color:#002a3d; border:none; font-weight:700}
+.btn.secondary{background:#eef5ff; border:none}
+
+/* Events list */
+.bullets{margin:8px 0 0 18px}
+.bullets li{margin:6px 0}
+
+/* Shops */
+.shops{display:flex; flex-wrap:wrap; gap:12px}
+.shop{padding:12px 16px; background:#fff; border-radius:12px; box-shadow:var(--shadow); text-decoration:none; color:var(--ink)}
+.shop[aria-disabled="true"]{opacity:.6; pointer-events:none}
+
+/* Contact */
+.contact-form{display:grid; gap:10px; max-width:560px}
+.contact-form label{display:grid; gap:6px; font-weight:600}
+.contact-form input, .contact-form textarea{
+  padding:10px 12px; border-radius:10px; border:1px solid #ccd5e0; font:inherit;
+}
+.note{font-size:.9rem; color:var(--muted)}
+
+/* Footer */
+.site-footer{padding:26px 20px; text-align:center; color:#5a6a86}
+
+/* Dialog quiz */
+dialog{border:none; border-radius:16px; padding:18px 18px 24px; width:min(560px, 92vw); box-shadow:var(--shadow)}
+dialog::backdrop{background:rgba(0,0,0,.4)}
+.quiz-actions{display:flex; gap:12px; margin:12px 0}
+.quiz-answer{margin:8px 0 0; color:#173a0b; background:#e9f7e6; padding:10px 12px; border-radius:10px}
+
+/* Responsive */
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr; padding-top:24px}
+  .floating-facts{position:static; flex-direction:row; justify-content:center; margin-top:10px}
+}
+
+.author-wrap{display:flex;justify-content:flex-start;margin:8px 0 10px}
+.author-img{width:120px;height:120px;border-radius:50%;box-shadow:var(--shadow)}
