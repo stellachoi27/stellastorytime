@@ -113,19 +113,27 @@
     <section id="contact" class="panel alt">
       <div class="panel-inner">
         <h2>Contact</h2>
-        <form class="contact-form" action="#" method="POST" onsubmit="return false">
-          <label> Name
-            <input type="text" name="name" required>
+        <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html" class="contact-form">
+        <input type="hidden" name="form-name" value="contact">
+        <p class="hidden" style="display:none">
+          <label>Don’t fill this out if you're human:
+            <input name="bot-field">
           </label>
-          <label> Email
-            <input type="email" name="email" required>
-          </label>
-          <label> Message
-            <textarea name="message" rows="4" required></textarea>
-          </label>
-          <button class="btn primary" type="submit">Send</button>
-          <p class="note">Want this form to send to your inbox? I can wire it to Formspree/Netlify or your backend.</p>
-        </form>
+        </p>
+      
+        <label> Name
+          <input type="text" name="name" required>
+        </label>
+      
+        <label> Email
+          <input type="email" name="email" required>
+        </label>
+      
+        <label> Message
+          <textarea name="message" rows="4" required></textarea>
+        </label>
+        <button class="btn primary" type="submit">Send</button>
+      </form>
       </div>
     </section>
   </main>
