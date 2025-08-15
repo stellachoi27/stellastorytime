@@ -70,11 +70,6 @@ body{
 .hero-art{margin:0; filter:drop-shadow(var(--shadow))}
 .hero-art img{width:100%; border-radius:var(--radius)}
 
-/* Floating facts bubbles */
-.floating-facts{position:absolute; inset:auto 10% 10% auto; display:flex; gap:12px; flex-direction:column}
-.fact{border:0; width:48px; height:48px; border-radius:50%; background:var(--accent-2); color:#592c00; font-weight:700; cursor:pointer; box-shadow:var(--shadow)}
-.fact:hover{transform:translateY(-2px)}
-
 /* Panels */
 .panel{padding:56px 20px; background:transparent}
 .panel.alt{background:linear-gradient(180deg, #fff 0%, #f3f8ff 100%)}
@@ -176,3 +171,71 @@ dialog::backdrop{background:rgba(0,0,0,.4)}
 
 .hidden { display: none !important; }
 
+/* ===== Scroll Tips ===== */
+#tips-layer{
+  position:fixed; inset:0; z-index:60; pointer-events:none; /* layer on top, but tips themselves can be clicked */
+}
+
+/* Tip shell */
+.tip{
+  position:fixed; max-width:min(320px, 92vw);
+  display:flex; gap:12px; align-items:flex-start;
+  pointer-events:auto; opacity:0; transform:translateY(6px);
+  transition:opacity .22s ease, transform .22s ease;
+}
+.tip.show{ opacity:1; transform:translateY(0); }
+.tip.left{ left:16px; }
+.tip.right{ right:16px; }
+/* vertical placement – tweak per taste */
+.tip.at-30{ top:30vh; } .tip.at-60{ top:60vh; }
+
+/* Character circle (use an image or fallback initial) */
+.tip .char{
+  width:72px; height:72px; border-radius:50%;
+  background:#fff; color:#1f2a44; font-weight:800; font-size:28px;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:var(--shadow); overflow:hidden; flex-shrink:0;
+}
+.tip .char img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+/* Speech bubble */
+.tip .bubble{
+  background:#fff; border:1px solid rgba(0,0,0,.08);
+  border-radius:14px; padding:12px 14px; box-shadow:var(--shadow);
+  color:var(--ink);
+  position:relative;
+}
+.tip .bubble h4{ margin:0 0 6px; font-size:14px; letter-spacing:.2px; color:var(--muted) }
+.tip .bubble p{ margin:0; font-size:15px; line-height:1.4; }
+
+/* Bubble tails */
+.tip.left .bubble::after{
+  content:""; position:absolute; left:-8px; top:18px;
+  border-width:8px; border-style:solid;
+  border-color:transparent #fff transparent transparent;
+  filter:drop-shadow(-1px 0px 0 rgba(0,0,0,.08));
+}
+.tip.right .bubble::after{
+  content:""; position:absolute; right:-8px; top:18px;
+  border-width:8px; border-style:solid;
+  border-color:transparent transparent transparent #fff;
+  filter:drop-shadow(1px 0px 0 rgba(0,0,0,.08));
+}
+
+/* Close + “hide tips” */
+.tip .actions{ margin-top:8px; display:flex; gap:10px; }
+.tip .close, .tip .hide-all{
+  background:#eef5ff; border:none; border-radius:10px; padding:6px 8px; cursor:pointer;
+  color:#00304d; font-weight:600;
+}
+.tip .close:hover, .tip .hide-all:hover{ filter:brightness(1.05); }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .tip{ transition:none }
+}
+
+/* Mobile: shrink the avatar a bit */
+@media (max-width: 520px){
+  .tip .char{ width:56px; height:56px; font-size:22px }
+}
