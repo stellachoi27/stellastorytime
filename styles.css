@@ -158,3 +158,44 @@ dialog::backdrop{background:rgba(0,0,0,.4)}
 .social-link img{ width:24px; height:24px; display:block; }
 
 .hidden { display: none !important; }
+
+/* ===== Meet the Characters ===== */
+.sub{ color: var(--muted); margin: 4px 0 18px; }
+
+.char-grid{
+  display:grid; gap:16px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.char-card{
+  display:flex; flex-direction:column; align-items:center; gap:10px;
+  background: var(--paper); border-radius: var(--radius);
+  padding:16px 14px; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,.05);
+  cursor:pointer; text-align:center; transition: transform .12s ease, box-shadow .12s ease;
+}
+.char-card:hover{ transform: translateY(-2px); box-shadow: 0 10px 26px rgba(31,42,68,.16); }
+
+.char-card .pic{
+  width:120px; height:120px; border-radius:50%; overflow:hidden;
+  display:grid; place-items:center; background:#fff;
+  box-shadow: var(--shadow);
+}
+.char-card img{ width:100%; height:100%; object-fit:cover; display:block; }
+.char-card .initial{
+  font-family:"Chaloops", cursive; font-size:42px; color: var(--ink);
+}
+
+.char-card .label{ font-weight:700; font-size:18px; }
+
+/* Modal */
+#char-modal{ border:none; border-radius:16px; padding:18px; width:min(620px, 92vw); box-shadow:var(--shadow); }
+#char-modal::backdrop{ background: rgba(0,0,0,.35); }
+.char-modal-inner{ display:grid; gap:14px; }
+.modal-head{ display:flex; align-items:center; gap:14px; }
+#cm-img{ width:96px; height:96px; border-radius:50%; object-fit:cover; box-shadow: var(--shadow); background:#fff; }
+.cm-desc{ margin:6px 0 0; color: var(--ink); }
+.tipbox{
+  background:#eef5ff; border:1px solid rgba(0,0,0,.06); color:#00304d;
+  padding:12px 14px; border-radius:12px;
+}
+.modal-actions{ display:flex; justify-content:flex-end; }
