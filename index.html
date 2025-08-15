@@ -53,6 +53,75 @@
       </div>
     </section>
 
+    <section id="characters" class="panel alt">
+      <div class="panel-inner">
+        <h2>Meet the Characters</h2>
+        <p class="sub">Tap a character to learn more — and get a quick digital-literacy tip.</p>
+    
+        <div class="char-grid">
+          <!-- Birdie (we have this image) -->
+          <button type="button" class="char-card"
+            data-name="Birdie the AI"
+            data-desc="A clever helper who sometimes gets a little too confident."
+            data-tip="AI can sound sure and still be wrong — double-check important facts!"
+            data-img="assets/img/birdie.png">
+            <span class="pic"><img src="assets/img/birdie.png" alt=""></span>
+            <span class="label">Birdie</span>
+          </button>
+    
+          <!-- Leif (swap image when you upload it) -->
+          <button type="button" class="char-card"
+            data-name="Leif"
+            data-desc="Curious and thoughtful — learning how to check information online."
+            data-tip="Fancy websites aren’t always trustworthy. Look for the author and sources."
+            data-img="assets/img/leif.png">
+            <span class="pic"><span class="initial">L</span></span>
+            <span class="label">Leif</span>
+          </button>
+    
+          <!-- Hoverboard Squirrel -->
+          <button type="button" class="char-card"
+            data-name="Hoverboard Squirrel"
+            data-desc="Fast, funny, and sometimes zooms past the facts."
+            data-tip="When two trustworthy sources agree, a claim is stronger."
+            data-img="assets/img/squirrel.png">
+            <span class="pic"><span class="initial">S</span></span>
+            <span class="label">Squirrel</span>
+          </button>
+    
+          <!-- Wisdom Tree -->
+          <button type="button" class="char-card"
+            data-name="Wisdom Tree"
+            data-desc="Reminds everyone to slow down, think, and ask good questions."
+            data-tip="Ask a trusted adult before sharing personal info online."
+            data-img="assets/img/wisdom-tree.png">
+            <span class="pic"><span class="initial">W</span></span>
+            <span class="label">Wisdom Tree</span>
+          </button>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Character modal (put this once near the end of <body>) -->
+    <dialog id="char-modal">
+      <form method="dialog" class="char-modal-inner">
+        <div class="modal-head">
+          <img id="cm-img" alt="" />
+          <div>
+            <h3 id="cm-name">Character</h3>
+            <p id="cm-desc" class="cm-desc"></p>
+          </div>
+        </div>
+        <div class="tipbox">
+          <strong>Tip:</strong> <span id="cm-tip"></span>
+        </div>
+        <div class="modal-actions">
+          <button class="btn primary" value="close">Close</button>
+        </div>
+      </form>
+    </dialog>
+
+
     <section id="author" class="panel alt">
       <div class="panel-inner">
         <h2>About the Author</h2>
