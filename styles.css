@@ -142,3 +142,22 @@ dialog::backdrop{background:rgba(0,0,0,.4)}
   }
 }
 
+/* Footer socials */
+.site-footer .social{
+  margin-top:10px;
+  display:flex;
+  justify-content:center;
+  gap:12px;
+}
+.social-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:44px; height:44px;
+  background:#ffffff;           /* small pill behind the icon */
+  border-radius:999px;
+  box-shadow:var(--shadow);
+  text-decoration:none;
+}
+.social-link:hover{ transform: translateY(-1px); }
+.social-link img{ width:24px; height:24px; display:block; }
