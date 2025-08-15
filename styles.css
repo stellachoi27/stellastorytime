@@ -47,6 +47,18 @@ body{
 .nav .cta{background:var(--accent); color:#00304d; font-weight:600}
 .nav .cta:hover{filter:brightness(1.05)}
 
+/* Nav Instagram icon */
+.nav-social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 10px;
+  border-radius: 10px;
+}
+.nav-social:hover { background: #eef5ff; } /* or a softer var if you like */
+.nav-social img { width: 18px; height: 18px; display: block; }
+.nav-social svg { width: 18px; height: 18px; display: block; color: var(--ink); }
+
 /* Hero */
 .hero{display:grid; grid-template-columns:1.2fr 1fr; gap:24px; align-items:center; padding:48px 20px; max-width:1100px; margin:0 auto}
 .hero-text h1{
