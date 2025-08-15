@@ -109,6 +109,13 @@
         </ul>
       </div>
     </section>
+
+    <!-- Netlify form template (hidden) to guarantee detection -->
+    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name">
+      <input type="email" name="email">
+      <textarea name="message"></textarea>
+    </form>
     
     <section id="contact" class="panel alt">
       <div class="panel-inner">
