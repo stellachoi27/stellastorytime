@@ -56,88 +56,47 @@ nextBtn.addEventListener('click', ()=>{
   loadQ();
 });
 
-/* ===== Scroll-triggered character tips (persist until closed) ===== */
+/* ===== Single Birdie tip on #book ===== */
 (function(){
-  const tipsLayer = document.getElementById('tips-layer');
-  if(!tipsLayer){ console.warn('[tips] #tips-layer not found'); return; }
+  const layer = document.getElementById('tips-layer');
+  const section = document.getElementById('book');
+  if (!layer || !section) return;
 
-  const TIPS = [
-    { section:'book',      side:'right', vert:'at-30', title:'Birdie says…',   text:'AI can sound confident and still be wrong. Double-check important facts!',           char:{ img:null, initial:'B' } },
-    { section:'author',    side:'left',  vert:'at-60', title:'Leif’s tip',     text:'Fancy websites aren’t always trustworthy—look for who wrote it and their sources.', char:{ img:null, initial:'L' } },
-    { section:'activities',side:'right', vert:'at-60', title:'Squirrel zoom!', text:'Two trustworthy sources that agree make a claim stronger.',                         char:{ img:null, initial:'S' } },
-    { section:'events',    side:'left',  vert:'at-30', title:'Wisdom Tree',    text:'Ask a trusted adult before sharing personal info online.',                           char:{ img:null, initial:'W' } },
-    { section:'contact',   side:'right', vert:'at-30', title:'Before you go…', text:'Be curious, kind, and careful with what you post. The internet remembers.',          char:{ img:null, initial:'💬' } }
-  ];
+  let shown = false;
 
-  const HIDE_KEY = 'tips_hide_all';
-  if (sessionStorage.getItem(HIDE_KEY) === '1') return;
+  function buildTip(){
+    const tip = document.createElement('div');
+    tip.id = 'birdie-tip';
+    tip.className = 'tip';
 
-  const shown = new Set();
+    const img = document.createElement('img');
+    img.className = 'char-img';
+    img.src = '/assets/img/birdie.png';
+    img.alt = 'Birdie';
 
-  function buildTip(tip){
-    const el = document.createElement('div');
-    el.className = `tip ${tip.side} ${tip.vert}`;
-    el.setAttribute('role','status');
+    const speech = document.createElement('div');
+    speech.className = 'speech';
+    speech.innerHTML = `
+      <div class="speech-inner">
+        <p>Test message!</p>
+        <button type="button" class="gotit">Got it!</button>
+      </div>
+    `;
 
-    const char = document.createElement('div');
-    char.className = 'char';
-    if (tip.char && tip.char.img){
-      const img = document.createElement('img');
-      img.src = tip.char.img;
-      img.alt = tip.title || 'Character';
-      char.appendChild(img);
-    } else {
-      char.textContent = tip.char?.initial || '';
-      char.setAttribute('aria-hidden','true');
-    }
+    tip.append(img, speech);
+    layer.appendChild(tip);
 
-    const bubble = document.createElement('div');
-    bubble.className = 'bubble';
-    const h4 = document.createElement('h4'); h4.textContent = tip.title || 'Tip';
-    const p  = document.createElement('p');  p.textContent  = tip.text  || '';
-    const actions = document.createElement('div'); actions.className = 'actions';
-    const closeBtn = document.createElement('button'); closeBtn.className='close'; closeBtn.type='button'; closeBtn.textContent='Close';
-    const hideAll  = document.createElement('button'); hideAll.className='hide-all'; hideAll.type='button'; hideAll.textContent='Hide tips';
-    actions.append(closeBtn, hideAll);
-    bubble.append(h4, p, actions);
-
-    el.append(char, bubble);
-
-    closeBtn.addEventListener('click', () => {
-      el.classList.remove('show');
-      setTimeout(()=> el.remove(), 180);
-    });
-    hideAll.addEventListener('click', () => {
-      sessionStorage.setItem(HIDE_KEY, '1');
-      document.querySelectorAll('#tips-layer .tip').forEach(t => t.remove());
-    });
-
-    return el;
+    speech.querySelector('.gotit').addEventListener('click', ()=> tip.remove());
   }
 
-  function showTip(tip){
-    const el = buildTip(tip);
-    tipsLayer.appendChild(el);
-    requestAnimationFrame(()=> el.classList.add('show')); // triggers CSS slide-in
-  }
-
-  // Watch sections; fire when at least ~25% visible
-  const observer = new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      if (!entry.isIntersecting) return;
-      const id = entry.target.id;
-      const tip = TIPS.find(t => t.section === id);
-      if (!tip || shown.has(id)) return;
-      shown.add(id);
-      showTip(tip);
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if (e.isIntersecting && !shown){
+        shown = true;     // show only once
+        buildTip();
+      }
     });
-  }, { threshold: 0.25, rootMargin: '0px 0px -20% 0px' });
+  }, { threshold: 0.35 });
 
-  ['book','author','activities','events','contact'].forEach(id=>{
-    const el = document.getElementById(id);
-    if (el) observer.observe(el); else console.warn('[tips] missing section:', id);
-  });
-
-  // Optional: debug – append #debugtip to URL to force-show the first tip
-  if (location.hash.includes('debugtip')) showTip(TIPS[0]);
+  io.observe(section);
 })();
