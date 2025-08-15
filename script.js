@@ -56,62 +56,23 @@ nextBtn.addEventListener('click', ()=>{
   loadQ();
 });
 
-/* ===== Scroll-triggered character tips =====
-   - One tip per section appears as you scroll into it
-   - Dismiss with “Close” or hide all for the session
-*/
+/* ===== Scroll-triggered character tips (persist until closed) ===== */
 (function(){
   const tipsLayer = document.getElementById('tips-layer');
   if(!tipsLayer) return;
 
-  // Map of section -> tip config
-  // TODO: swap 'char' images to your real assets when you upload them:
-  //  e.g., 'assets/img/birdie.png', 'assets/img/squirrel.png', 'assets/img/wisdom-tree.png'
   const TIPS = [
-    {
-      section: 'book',
-      side: 'right', vert: 'at-30',
-      title: 'Birdie says…',
-      text: 'AI can sound confident and still be wrong. Double-check important facts!',
-      char: { img: null, initial: 'B' } // placeholder initial until image provided
-    },
-    {
-      section: 'author',
-      side: 'left', vert: 'at-60',
-      title: 'Leif’s tip',
-      text: 'Fancy websites aren’t always trustworthy—look for who wrote it and their sources.',
-      char: { img: null, initial: 'L' }
-    },
-    {
-      section: 'activities',
-      side: 'right', vert: 'at-60',
-      title: 'Squirrel zoom!',
-      text: 'Two trustworthy sources that agree make a claim stronger.',
-      char: { img: null, initial: 'S' }
-    },
-    {
-      section: 'events',
-      side: 'left', vert: 'at-30',
-      title: 'Wisdom Tree',
-      text: 'Ask a trusted adult before sharing personal info online.',
-      char: { img: null, initial: 'W' }
-    },
-    {
-      section: 'contact',
-      side: 'right', vert: 'at-30',
-      title: 'Before you go…',
-      text: 'Be curious, kind, and careful with what you post. The internet remembers.',
-      char: { img: null, initial: '💬' }
-    }
+    { section:'book',    side:'right', vert:'at-30', title:'Birdie says…',  text:'AI can sound confident and still be wrong. Double-check important facts!', char:{ img:null, initial:'B' } },
+    { section:'author',  side:'left',  vert:'at-60', title:'Leif’s tip',    text:'Fancy websites aren’t always trustworthy—look for who wrote it and their sources.', char:{ img:null, initial:'L' } },
+    { section:'activities', side:'right', vert:'at-60', title:'Squirrel zoom!', text:'Two trustworthy sources that agree make a claim stronger.', char:{ img:null, initial:'S' } },
+    { section:'events',  side:'left',  vert:'at-30', title:'Wisdom Tree',   text:'Ask a trusted adult before sharing personal info online.', char:{ img:null, initial:'W' } },
+    { section:'contact', side:'right', vert:'at-30', title:'Before you go…', text:'Be curious, kind, and careful with what you post. The internet remembers.', char:{ img:null, initial:'💬' } }
   ];
 
-  // Allow user to hide all tips for this session
   const HIDE_KEY = 'tips_hide_all';
   if (sessionStorage.getItem(HIDE_KEY) === '1') return;
 
-  const shown = new Set(); // avoid repeating per session
-  let currentEl = null;
-  let hideTimer = null;
+  const shown = new Set(); // only one tip per section
 
   function buildTip(tip){
     const el = document.createElement('div');
@@ -125,7 +86,7 @@ nextBtn.addEventListener('click', ()=>{
       img.src = tip.char.img;
       img.alt = tip.title || 'Character';
       char.appendChild(img);
-    }else{
+    } else {
       char.textContent = tip.char?.initial || '';
       char.setAttribute('aria-hidden','true');
     }
@@ -133,10 +94,10 @@ nextBtn.addEventListener('click', ()=>{
     const bubble = document.createElement('div');
     bubble.className = 'bubble';
     const h4 = document.createElement('h4'); h4.textContent = tip.title || 'Tip';
-    const p = document.createElement('p'); p.textContent = tip.text || '';
+    const p  = document.createElement('p');  p.textContent  = tip.text  || '';
     const actions = document.createElement('div'); actions.className = 'actions';
-    const closeBtn = document.createElement('button'); closeBtn.className = 'close'; closeBtn.type='button'; closeBtn.textContent='Close';
-    const hideAll = document.createElement('button'); hideAll.className = 'hide-all'; hideAll.type='button'; hideAll.textContent="Hide tips";
+    const closeBtn = document.createElement('button'); closeBtn.className='close'; closeBtn.type='button'; closeBtn.textContent='Close';
+    const hideAll  = document.createElement('button'); hideAll.className='hide-all'; hideAll.type='button'; hideAll.textContent='Hide tips';
     actions.append(closeBtn, hideAll);
     bubble.append(h4, p, actions);
 
@@ -145,32 +106,24 @@ nextBtn.addEventListener('click', ()=>{
     closeBtn.addEventListener('click', () => dismiss(el));
     hideAll.addEventListener('click', () => {
       sessionStorage.setItem(HIDE_KEY, '1');
-      dismiss(el);
+      document.querySelectorAll('#tips-layer .tip').forEach(t => t.remove());
     });
 
     return el;
   }
 
   function dismiss(el){
-    if(!el) return;
     el.classList.remove('show');
-    setTimeout(()=>{ el.remove(); }, 180);
-    if (hideTimer){ clearTimeout(hideTimer); hideTimer = null; }
-    currentEl = null;
+    setTimeout(()=> el.remove(), 180);
   }
 
   function showTip(tip){
-    // if already showing something, replace it
-    if(currentEl){ dismiss(currentEl); }
     const el = buildTip(tip);
     tipsLayer.appendChild(el);
     requestAnimationFrame(()=> el.classList.add('show'));
-    currentEl = el;
-    // auto-hide after 7s
-    hideTimer = setTimeout(()=> dismiss(el), 7000);
+    // NOTE: no auto-hide — tips persist until user closes/hides
   }
 
-  // Observe sections entering viewport
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if(!entry.isIntersecting) return;
@@ -182,9 +135,9 @@ nextBtn.addEventListener('click', ()=>{
     });
   }, { threshold: 0.5 });
 
-  // Attach to your sections
   ['book','author','activities','events','contact'].forEach(id => {
     const el = document.getElementById(id);
     if(el) observer.observe(el);
   });
 })();
+
