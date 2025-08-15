@@ -57,41 +57,74 @@ nextBtn.addEventListener('click', ()=>{
 });
 
 /* ===== Meet the Characters (modal) ===== */
-(function(){
-  const cards = document.querySelectorAll('.char-card');
-  const modal = document.getElementById('char-modal');
+(function () {
+  const cards = document.querySelectorAll(".char-card");
+  const modal = document.getElementById("char-modal");
   if (!cards.length || !modal) return;
 
-  const img = modal.querySelector('#cm-img');
-  const name = modal.querySelector('#cm-name');
-  const desc = modal.querySelector('#cm-desc');
-  const tip = modal.querySelector('#cm-tip');
+  const imgEl  = modal.querySelector("#cm-img");
+  const nameEl = modal.querySelector("#cm-name");
+  const descEl = modal.querySelector("#cm-desc");
+  const tipEl  = modal.querySelector("#cm-tip");
 
-  cards.forEach(card => {
-    card.addEventListener('click', () => {
-      const src = card.dataset.img;
-      name.textContent = card.dataset.name || 'Character';
-      desc.textContent = card.dataset.desc || '';
-      tip.textContent  = card.dataset.tip  || '';
-      // show image if present, else fall back to a generated initial bubble
-      if (src && !src.endsWith('undefined')) {
-        img.src = src;
-        img.alt = card.dataset.name || '';
-        img.style.display = 'block';
+  let lastTrigger = null; // return focus to the clicked card after close
+
+  // Apply focus crop to each card image from data-pos
+  cards.forEach((card) => {
+    const pos = card.dataset.pos || "50% 50%";
+    const cardImg = card.querySelector(".pic img");
+    if (cardImg) {
+      cardImg.style.objectPosition = pos;     // focus inside the circle
+      cardImg.style.objectFit = "cover";      // just in case
+    }
+
+    // Open modal with this card's data
+    card.addEventListener("click", () => {
+      lastTrigger = card;
+
+      const src = card.dataset.img || "";
+      const posForModal = card.dataset.pos || "50% 50%";
+
+      nameEl.textContent = card.dataset.name || "Character";
+      descEl.textContent = card.dataset.desc || "";
+      tipEl.textContent  = card.dataset.tip  || "";
+
+      if (src) {
+        imgEl.src = src;
+        imgEl.alt = card.dataset.name || "";
+        imgEl.style.display = "block";
+        imgEl.style.objectFit = "cover";
+        imgEl.style.objectPosition = posForModal; // focus in the modal
       } else {
-        img.src = '';
-        img.alt = '';
-        img.style.display = 'none';
+        imgEl.removeAttribute("src");
+        imgEl.alt = "";
+        imgEl.style.display = "none";
       }
-      modal.showModal();
+
+      if (typeof modal.showModal === "function") {
+        modal.showModal();
+      } else {
+        // graceful fallback if <dialog> isn't supported
+        modal.setAttribute("open", "");
+      }
     });
   });
 
-  // close on click-outside
-  modal.addEventListener('click', (e)=>{
+  // Close when clicking outside the dialog panel
+  modal.addEventListener("click", (e) => {
     const rect = modal.getBoundingClientRect();
-    const inDialog = (e.clientX >= rect.left && e.clientX <= rect.right &&
-                      e.clientY >= rect.top  && e.clientY <= rect.bottom);
-    if (!inDialog) modal.close();
+    const inside =
+      e.clientX >= rect.left &&
+      e.clientX <= rect.right &&
+      e.clientY >= rect.top &&
+      e.clientY <= rect.bottom;
+    if (!inside) {
+      modal.close ? modal.close() : modal.removeAttribute("open");
+    }
+  });
+
+  // Return focus to the last-triggering card when the dialog closes
+  modal.addEventListener("close", () => {
+    if (lastTrigger) lastTrigger.focus();
   });
 })();
