@@ -55,3 +55,43 @@ nextBtn.addEventListener('click', ()=>{
   i++;
   loadQ();
 });
+
+/* ===== Meet the Characters (modal) ===== */
+(function(){
+  const cards = document.querySelectorAll('.char-card');
+  const modal = document.getElementById('char-modal');
+  if (!cards.length || !modal) return;
+
+  const img = modal.querySelector('#cm-img');
+  const name = modal.querySelector('#cm-name');
+  const desc = modal.querySelector('#cm-desc');
+  const tip = modal.querySelector('#cm-tip');
+
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      const src = card.dataset.img;
+      name.textContent = card.dataset.name || 'Character';
+      desc.textContent = card.dataset.desc || '';
+      tip.textContent  = card.dataset.tip  || '';
+      // show image if present, else fall back to a generated initial bubble
+      if (src && !src.endsWith('undefined')) {
+        img.src = src;
+        img.alt = card.dataset.name || '';
+        img.style.display = 'block';
+      } else {
+        img.src = '';
+        img.alt = '';
+        img.style.display = 'none';
+      }
+      modal.showModal();
+    });
+  });
+
+  // close on click-outside
+  modal.addEventListener('click', (e)=>{
+    const rect = modal.getBoundingClientRect();
+    const inDialog = (e.clientX >= rect.left && e.clientX <= rect.right &&
+                      e.clientY >= rect.top  && e.clientY <= rect.bottom);
+    if (!inDialog) modal.close();
+  });
+})();
