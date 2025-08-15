@@ -59,20 +59,20 @@ nextBtn.addEventListener('click', ()=>{
 /* ===== Scroll-triggered character tips (persist until closed) ===== */
 (function(){
   const tipsLayer = document.getElementById('tips-layer');
-  if(!tipsLayer) return;
+  if(!tipsLayer){ console.warn('[tips] #tips-layer not found'); return; }
 
   const TIPS = [
-    { section:'book',    side:'right', vert:'at-30', title:'Birdie says…',  text:'AI can sound confident and still be wrong. Double-check important facts!', char:{ img:null, initial:'B' } },
-    { section:'author',  side:'left',  vert:'at-60', title:'Leif’s tip',    text:'Fancy websites aren’t always trustworthy—look for who wrote it and their sources.', char:{ img:null, initial:'L' } },
-    { section:'activities', side:'right', vert:'at-60', title:'Squirrel zoom!', text:'Two trustworthy sources that agree make a claim stronger.', char:{ img:null, initial:'S' } },
-    { section:'events',  side:'left',  vert:'at-30', title:'Wisdom Tree',   text:'Ask a trusted adult before sharing personal info online.', char:{ img:null, initial:'W' } },
-    { section:'contact', side:'right', vert:'at-30', title:'Before you go…', text:'Be curious, kind, and careful with what you post. The internet remembers.', char:{ img:null, initial:'💬' } }
+    { section:'book',      side:'right', vert:'at-30', title:'Birdie says…',   text:'AI can sound confident and still be wrong. Double-check important facts!',           char:{ img:null, initial:'B' } },
+    { section:'author',    side:'left',  vert:'at-60', title:'Leif’s tip',     text:'Fancy websites aren’t always trustworthy—look for who wrote it and their sources.', char:{ img:null, initial:'L' } },
+    { section:'activities',side:'right', vert:'at-60', title:'Squirrel zoom!', text:'Two trustworthy sources that agree make a claim stronger.',                         char:{ img:null, initial:'S' } },
+    { section:'events',    side:'left',  vert:'at-30', title:'Wisdom Tree',    text:'Ask a trusted adult before sharing personal info online.',                           char:{ img:null, initial:'W' } },
+    { section:'contact',   side:'right', vert:'at-30', title:'Before you go…', text:'Be curious, kind, and careful with what you post. The internet remembers.',          char:{ img:null, initial:'💬' } }
   ];
 
   const HIDE_KEY = 'tips_hide_all';
   if (sessionStorage.getItem(HIDE_KEY) === '1') return;
 
-  const shown = new Set(); // only one tip per section
+  const shown = new Set();
 
   function buildTip(tip){
     const el = document.createElement('div');
@@ -81,7 +81,7 @@ nextBtn.addEventListener('click', ()=>{
 
     const char = document.createElement('div');
     char.className = 'char';
-    if(tip.char?.img){
+    if (tip.char && tip.char.img){
       const img = document.createElement('img');
       img.src = tip.char.img;
       img.alt = tip.title || 'Character';
@@ -103,7 +103,10 @@ nextBtn.addEventListener('click', ()=>{
 
     el.append(char, bubble);
 
-    closeBtn.addEventListener('click', () => dismiss(el));
+    closeBtn.addEventListener('click', () => {
+      el.classList.remove('show');
+      setTimeout(()=> el.remove(), 180);
+    });
     hideAll.addEventListener('click', () => {
       sessionStorage.setItem(HIDE_KEY, '1');
       document.querySelectorAll('#tips-layer .tip').forEach(t => t.remove());
@@ -112,32 +115,29 @@ nextBtn.addEventListener('click', ()=>{
     return el;
   }
 
-  function dismiss(el){
-    el.classList.remove('show');
-    setTimeout(()=> el.remove(), 180);
-  }
-
   function showTip(tip){
     const el = buildTip(tip);
     tipsLayer.appendChild(el);
-    requestAnimationFrame(()=> el.classList.add('show'));
-    // NOTE: no auto-hide — tips persist until user closes/hides
+    requestAnimationFrame(()=> el.classList.add('show')); // triggers CSS slide-in
   }
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if(!entry.isIntersecting) return;
+  // Watch sections; fire when at least ~25% visible
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if (!entry.isIntersecting) return;
       const id = entry.target.id;
       const tip = TIPS.find(t => t.section === id);
-      if(!tip || shown.has(id)) return;
+      if (!tip || shown.has(id)) return;
       shown.add(id);
       showTip(tip);
     });
-  }, { threshold: 0.5 });
+  }, { threshold: 0.25, rootMargin: '0px 0px -20% 0px' });
 
-  ['book','author','activities','events','contact'].forEach(id => {
+  ['book','author','activities','events','contact'].forEach(id=>{
     const el = document.getElementById(id);
-    if(el) observer.observe(el);
+    if (el) observer.observe(el); else console.warn('[tips] missing section:', id);
   });
-})();
 
+  // Optional: debug – append #debugtip to URL to force-show the first tip
+  if (location.hash.includes('debugtip')) showTip(TIPS[0]);
+})();
