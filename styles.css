@@ -171,63 +171,43 @@ dialog::backdrop{background:rgba(0,0,0,.4)}
 
 .hidden { display: none !important; }
 
-/* ===== Scroll Tips (slide-out + speech bubbles, persist) ===== */
-#tips-layer{ position:fixed; inset:0; z-index:60; pointer-events:none; }
-
-/* Container starts hidden; .show reveals it */
-.tip{ position:fixed; max-width:min(360px, 92vw); display:flex; gap:12px; align-items:flex-start; pointer-events:auto; opacity:0; }
-.tip.show{ opacity:1; }                 /* <-- important */
-.tip.left  { left:16px; }
-.tip.right { right:16px; }
-.tip.at-30{ top:30vh; } .tip.at-60{ top:60vh; }
-
-/* Slide from edge (char first, then bubble) */
-.tip .char, .tip .bubble{ opacity:0; will-change:transform,opacity; }
-.tip.left  .char, .tip.left  .bubble{ transform:translateX(-48px); }
-.tip.right .char, .tip.right .bubble{ transform:translateX(48px); }
-
-.tip.show .char, .tip.show .bubble{ transform:translateX(0); opacity:1; }
-
-.tip .char{
-  width:76px; height:76px; border-radius:50%;
-  background:#fff; color:#1f2a44; font-weight:800; font-size:28px;
-  display:flex; align-items:center; justify-content:center;
-  box-shadow:var(--shadow); overflow:hidden; flex-shrink:0;
-  transition: transform .45s cubic-bezier(.22,.9,.34,1), opacity .35s ease;
-}
-.tip .char img{ width:100%; height:100%; object-fit:cover; display:block; }
-
-.tip .bubble{
-  background:#fff; border:1px solid rgba(0,0,0,.08);
-  border-radius:18px; padding:12px 14px; box-shadow:var(--shadow); color:var(--ink);
-  position:relative;
-  transition: transform .45s cubic-bezier(.22,.9,.34,1), opacity .45s ease .06s;
-}
-.tip .bubble h4{ margin:0 0 6px; font-size:14px; letter-spacing:.2px; color:var(--muted) }
-.tip .bubble p { margin:0; font-size:15px; line-height:1.4; }
-
-/* Speech bubble tail */
-.tip.left  .bubble::after,
-.tip.right .bubble::after{
-  content:""; position:absolute; top:22px; width:14px; height:14px; background:#fff; transform:rotate(45deg);
-  box-shadow:0 0 0 1px rgba(0,0,0,.08);
-}
-.tip.left  .bubble::after{ left:-7px;  }
-.tip.right .bubble::after{ right:-7px; }
-
-/* Buttons */
-.tip .actions{ margin-top:8px; display:flex; gap:10px; }
-.tip .close, .tip .hide-all{
-  background:#eef5ff; border:none; border-radius:10px; padding:6px 8px; cursor:pointer; color:#00304d; font-weight:600;
-}
-.tip .close:hover, .tip .hide-all:hover{ filter:brightness(1.05); }
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce){
-  .tip .char, .tip .bubble{ transition:none !important; }
+/* ===== Single Birdie tip (right edge) ===== */
+#tips-layer{
+  position: fixed; inset: 0; z-index: 60; pointer-events: none;
 }
 
-/* Mobile */
-@media (max-width:520px){
-  .tip .char{ width:60px; height:60px; font-size:22px; }
+#birdie-tip.tip{
+  position: fixed; right: 16px; top: 30vh;
+  display: flex; gap: 12px; align-items: flex-start;
+  pointer-events: auto;      /* let clicks through on the tip */
+}
+
+/* Birdie art */
+#birdie-tip .char-img{
+  width: 140px; height: auto; display: block;
+  filter: drop-shadow(0 8px 18px rgba(31,42,68,.14));
+}
+
+/* Speech bubble as an image background, with text + button inside */
+#birdie-tip .speech{
+  width: clamp(220px, 36vw, 340px);
+  min-height: 140px;
+  background: url("/assets/img/speech-bubble.png") no-repeat center/100% 100%;
+  padding: 26px 24px 36px 24px;  /* space for the outline */
+  color: var(--ink);
+  display: flex; align-items: center;
+}
+
+#birdie-tip .speech-inner{ width: 100%; }
+#birdie-tip .speech-inner p{ margin: 0 0 10px; line-height: 1.35; font-size: 15px; }
+#birdie-tip .speech-inner .gotit{
+  background:#eef5ff; border:none; border-radius:10px; padding:8px 10px;
+  font-weight:600; color:#00304d; cursor:pointer;
+}
+#birdie-tip .speech-inner .gotit:hover{ filter: brightness(1.05); }
+
+/* Mobile tweaks */
+@media (max-width: 560px){
+  #birdie-tip .char-img{ width: 110px; }
+  #birdie-tip .speech{ width: clamp(220px, 80vw, 320px); }
 }
