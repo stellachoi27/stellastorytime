@@ -117,3 +117,33 @@ dialog::backdrop{background:rgba(0,0,0,.4)}
 
 .author-wrap{display:flex;justify-content:flex-start;margin:8px 0 10px}
 .author-img{width:120px;height:120px;border-radius:50%;box-shadow:var(--shadow)}
+
+/* Author layout */
+.author-row { 
+  display: flex; 
+  align-items: center; 
+  gap: 24px; 
+}
+.author-row .author-bio { 
+  flex: 1; 
+  font-size: 1.05rem; 
+}
+.author-img { 
+  width: 200px; 
+  height: 200px; 
+  object-fit: cover; 
+  border-radius: 50%; 
+  box-shadow: var(--shadow); 
+}
+
+/* Stack nicely on phones */
+@media (max-width: 720px){
+  .author-row { 
+    flex-direction: column; 
+    align-items: flex-start; 
+  }
+  .author-row .author-bio { 
+    font-size: 1rem; 
+  }
+}
+
