@@ -199,3 +199,24 @@ dialog::backdrop{background:rgba(0,0,0,.4)}
   padding:12px 14px; border-radius:12px;
 }
 .modal-actions{ display:flex; justify-content:flex-end; }
+
+/* Chaloops for character names (cards + modal) */
+.char-card .label,
+#cm-name{
+  font-family: "Chaloops", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  letter-spacing: .2px;
+}
+
+/* Per-character card colors (soft, book-friendly) */
+.char-card{ --card-bg:#fff; --card-border: rgba(0,0,0,.05); background: var(--card-bg); border: 1px solid var(--card-border); }
+.char-card.birdie   { --card-bg:#E7F4FB; --card-border: rgba(79,172,217,.20); }  /* Birdie blue */
+.char-card.leif     { --card-bg:#FFE7D9; --card-border: rgba(242,155,97,.25); }  /* hoodie tangerine tint */
+.char-card.chipmunk { --card-bg:#FFF6CC; --card-border: rgba(222,175,58,.25); }  /* warm yellow */
+.char-card.owlbot   { --card-bg:#EEE9E3; --card-border: rgba(112,96,86,.22); }   /* stone/wood */
+
+.char-card .pic{
+  width:128px; height:128px; border-radius:50%;
+  overflow:hidden; display:grid; place-items:center; background:#fff;
+  box-shadow: var(--shadow);
+}
+.char-card img{ width:100%; height:100%; object-fit:cover; display:block; }
