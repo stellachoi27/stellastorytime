@@ -171,33 +171,23 @@ dialog::backdrop{background:rgba(0,0,0,.4)}
 
 .hidden { display: none !important; }
 
-/* ===== Scroll Tips (slide-out + speech bubbles) ===== */
-#tips-layer{
-  position:fixed; inset:0; z-index:60; pointer-events:none;
-}
+/* ===== Scroll Tips (slide-out + speech bubbles, persist) ===== */
+#tips-layer{ position:fixed; inset:0; z-index:60; pointer-events:none; }
 
-/* Tip container */
-.tip{
-  position:fixed; max-width:min(360px, 92vw);
-  display:flex; gap:12px; align-items:flex-start;
-  pointer-events:auto;
-  opacity:0;
-}
+/* Container starts hidden; .show reveals it */
+.tip{ position:fixed; max-width:min(360px, 92vw); display:flex; gap:12px; align-items:flex-start; pointer-events:auto; opacity:0; }
+.tip.show{ opacity:1; }                 /* <-- important */
 .tip.left  { left:16px; }
 .tip.right { right:16px; }
 .tip.at-30{ top:30vh; } .tip.at-60{ top:60vh; }
 
-/* Slide-from-edge states */
-.tip .char, .tip .bubble{ opacity:0; }
-.tip.left  .char, .tip.left  .bubble  { transform: translateX(-48px); }
-.tip.right .char, .tip.right .bubble  { transform: translateX( 48px); }
+/* Slide from edge (char first, then bubble) */
+.tip .char, .tip .bubble{ opacity:0; will-change:transform,opacity; }
+.tip.left  .char, .tip.left  .bubble{ transform:translateX(-48px); }
+.tip.right .char, .tip.right .bubble{ transform:translateX(48px); }
 
-.tip.show .char, .tip.show .bubble{
-  transform: translateX(0);
-  opacity:1;
-}
+.tip.show .char, .tip.show .bubble{ transform:translateX(0); opacity:1; }
 
-/* Stagger so the character peeks first, then the bubble */
 .tip .char{
   width:76px; height:76px; border-radius:50%;
   background:#fff; color:#1f2a44; font-weight:800; font-size:28px;
@@ -209,40 +199,35 @@ dialog::backdrop{background:rgba(0,0,0,.4)}
 
 .tip .bubble{
   background:#fff; border:1px solid rgba(0,0,0,.08);
-  border-radius:18px; padding:12px 14px; box-shadow:var(--shadow);
-  color:var(--ink);
+  border-radius:18px; padding:12px 14px; box-shadow:var(--shadow); color:var(--ink);
   position:relative;
   transition: transform .45s cubic-bezier(.22,.9,.34,1), opacity .45s ease .06s;
 }
 .tip .bubble h4{ margin:0 0 6px; font-size:14px; letter-spacing:.2px; color:var(--muted) }
-.tip .bubble p{ margin:0; font-size:15px; line-height:1.4; }
+.tip .bubble p { margin:0; font-size:15px; line-height:1.4; }
 
-/* Curved “tail” for the speech bubble */
+/* Speech bubble tail */
 .tip.left  .bubble::after,
 .tip.right .bubble::after{
-  content:""; position:absolute; top:22px; width:14px; height:14px;
-  background:#fff; transform:rotate(45deg);
-  box-shadow: 0 0 0 1px rgba(0,0,0,.08);
+  content:""; position:absolute; top:22px; width:14px; height:14px; background:#fff; transform:rotate(45deg);
+  box-shadow:0 0 0 1px rgba(0,0,0,.08);
 }
-.tip.left  .bubble::after { left:-7px; }
-.tip.right .bubble::after { right:-7px; }
+.tip.left  .bubble::after{ left:-7px;  }
+.tip.right .bubble::after{ right:-7px; }
 
 /* Buttons */
 .tip .actions{ margin-top:8px; display:flex; gap:10px; }
 .tip .close, .tip .hide-all{
-  background:#eef5ff; border:none; border-radius:10px; padding:6px 8px; cursor:pointer;
-  color:#00304d; font-weight:600;
+  background:#eef5ff; border:none; border-radius:10px; padding:6px 8px; cursor:pointer; color:#00304d; font-weight:600;
 }
 .tip .close:hover, .tip .hide-all:hover{ filter:brightness(1.05); }
 
-/* Respect reduced motion */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce){
   .tip .char, .tip .bubble{ transition:none !important; }
 }
 
-/* Mobile slightly smaller avatar */
-@media (max-width: 520px){
-  .tip .char{ width:60px; height:60px; font-size:22px }
+/* Mobile */
+@media (max-width:520px){
+  .tip .char{ width:60px; height:60px; font-size:22px; }
 }
-.tip.show { opacity: 1; }
-
