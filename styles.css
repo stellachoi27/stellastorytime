@@ -161,3 +161,6 @@ dialog::backdrop{background:rgba(0,0,0,.4)}
 }
 .social-link:hover{ transform: translateY(-1px); }
 .social-link img{ width:24px; height:24px; display:block; }
+
+.hidden { display: none !important; }
+
