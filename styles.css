@@ -244,3 +244,5 @@ dialog::backdrop{background:rgba(0,0,0,.4)}
 @media (max-width: 520px){
   .tip .char{ width:60px; height:60px; font-size:22px }
 }
+.tip.show { opacity: 1; }
+
