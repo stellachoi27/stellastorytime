@@ -47,18 +47,6 @@ body{
 .nav .cta{background:var(--accent); color:#00304d; font-weight:600}
 .nav .cta:hover{filter:brightness(1.05)}
 
-/* Nav Instagram icon */
-.nav-social {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 10px;
-  border-radius: 10px;
-}
-.nav-social:hover { background: #eef5ff; } /* or a softer var if you like */
-.nav-social img { width: 18px; height: 18px; display: block; }
-.nav-social svg { width: 18px; height: 18px; display: block; color: var(--ink); }
-
 /* Hero */
 .hero{display:grid; grid-template-columns:1.2fr 1fr; gap:24px; align-items:center; padding:48px 20px; max-width:1100px; margin:0 auto}
 .hero-text h1{
@@ -170,44 +158,3 @@ dialog::backdrop{background:rgba(0,0,0,.4)}
 .social-link img{ width:24px; height:24px; display:block; }
 
 .hidden { display: none !important; }
-
-/* ===== Single Birdie tip (right edge) ===== */
-#tips-layer{
-  position: fixed; inset: 0; z-index: 60; pointer-events: none;
-}
-
-#birdie-tip.tip{
-  position: fixed; right: 16px; top: 30vh;
-  display: flex; gap: 12px; align-items: flex-start;
-  pointer-events: auto;      /* let clicks through on the tip */
-}
-
-/* Birdie art */
-#birdie-tip .char-img{
-  width: 140px; height: auto; display: block;
-  filter: drop-shadow(0 8px 18px rgba(31,42,68,.14));
-}
-
-/* Speech bubble as an image background, with text + button inside */
-#birdie-tip .speech{
-  width: clamp(220px, 36vw, 340px);
-  min-height: 140px;
-  background: url("/assets/img/speech-bubble.png") no-repeat center/100% 100%;
-  padding: 26px 24px 36px 24px;  /* space for the outline */
-  color: var(--ink);
-  display: flex; align-items: center;
-}
-
-#birdie-tip .speech-inner{ width: 100%; }
-#birdie-tip .speech-inner p{ margin: 0 0 10px; line-height: 1.35; font-size: 15px; }
-#birdie-tip .speech-inner .gotit{
-  background:#eef5ff; border:none; border-radius:10px; padding:8px 10px;
-  font-weight:600; color:#00304d; cursor:pointer;
-}
-#birdie-tip .speech-inner .gotit:hover{ filter: brightness(1.05); }
-
-/* Mobile tweaks */
-@media (max-width: 560px){
-  #birdie-tip .char-img{ width: 110px; }
-  #birdie-tip .speech{ width: clamp(220px, 80vw, 320px); }
-}
