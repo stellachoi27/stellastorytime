@@ -95,3 +95,26 @@ document.getElementById('year').textContent = new Date().getFullYear();
   // If someone visits with #research in the URL, open the list automatically
   if (location.hash === '#research') setOpen(true);
 })();
+
+/* ===== Coloring pages toggle ===== */
+(function(){
+  const btn   = document.getElementById('toggle-coloring');
+  const block = document.getElementById('coloring-block');
+  if (!btn || !block) return;
+
+  function setOpen(open){
+    btn.setAttribute('aria-expanded', String(open));
+    btn.textContent = open ? 'Hide pages' : 'View pages';
+    block.hidden = !open;
+    if (open) block.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  btn.addEventListener('click', () => {
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    setOpen(!open);
+  });
+
+  // Auto-open if someone visits with #coloring in URL
+  if (location.hash === '#coloring') setOpen(true);
+})();
+
