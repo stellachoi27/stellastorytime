@@ -325,4 +325,22 @@ button.btn{
 @media (max-width:560px){
   .pdf-item{ flex-direction:column; align-items:flex-start; }
 }
+/* Stack title + description vertically */
+.pdf-item{ align-items:flex-start; }                 /* left column aligns from the top */
+.pdf-item .meta{
+  display:flex;
+  flex-direction:column;
+  gap:4px;                                          /* small space between lines */
+}
+.pdf-item .meta strong{
+  display:block;
+  font-weight:700;
+  line-height:1.15;
+}
+.pdf-item .meta em{
+  display:block;                                    /* forces it onto its own line */
+  color:var(--muted);
+  font-style:normal;
+  font-size:.92rem;
+}
 
