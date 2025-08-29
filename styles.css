@@ -295,3 +295,12 @@ h2{font-family:"Chaloops", cursive; font-size:clamp(28px,3.2vw,40px); margin:0 0
 }
 .for-grownups, .for-kids{ margin: .4rem 0; }
 .links a{ text-decoration: underline; }
+
+/* Make the 'View the list' button match .btn links */
+button.btn{
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+}
