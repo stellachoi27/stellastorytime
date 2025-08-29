@@ -238,3 +238,40 @@ dialog::backdrop{background:rgba(0,0,0,.4)}
 @media (max-width: 520px){
   .brand-mark{ width: 30px; height: 30px; }
 }
+
+/* ===== Events & School Visits ===== */
+.event-card{
+  background: var(--paper);
+  border: 1px solid rgba(0,0,0,.06);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+.event-head h3{
+  margin: 0 0 4px;
+  font-family: "Chaloops", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+.event-head time,
+.event-location{
+  display: block;
+  color: var(--muted);
+  font-size: .95rem;
+}
+
+.event-desc{ margin: 12px 0 10px; }
+
+.event-tags{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.event-tags span{
+  background:#eef5ff;
+  color:#00304d;
+  border-radius:999px;
+  padding:4px 8px;
+  font-size:.9rem;
+}
