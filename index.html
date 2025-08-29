@@ -156,8 +156,11 @@
           </li>
           <li class="card">
             <h3>Coloring Pages</h3>
-            <p>Meet hoverboard squirrels and the Wisdom Tree. Print, color, and share!</p>
-            <a class="btn" href="#" aria-disabled="true">PDF coming soon</a>
+            <p>Print and color your favorites.</p>
+            <button class="btn" id="toggle-coloring" type="button"
+                    aria-controls="coloring-block" aria-expanded="false">
+              View pages
+            </button>
           </li>
           <li class="card">
             <h3>Digital Literacy Pledge</h3>
@@ -165,6 +168,40 @@
             <a class="btn" href="#" aria-disabled="true">PDF coming soon</a>
           </li>
         </ul>
+      <div id="coloring-block" hidden>
+      <h3 id="coloring">Coloring Pages</h3>
+      <div class="resource-grid">
+        <!-- Leif -->
+        <a class="resource-card" href="/assets/pdfs/coloring-leif.pdf" target="_blank" rel="noopener">
+          <span class="thumb"><img src="/assets/img/leif.png" alt="Leif coloring page"></span>
+          <span class="meta">
+            <strong>Leif (PDF)</strong>
+            <em>1 page • US Letter</em>
+          </span>
+          <span class="action btn">Open PDF</span>
+        </a>
+    
+        <!-- Confused Chipmunk -->
+        <a class="resource-card" href="/assets/pdfs/coloring-squirrel.pdf" target="_blank" rel="noopener">
+          <span class="thumb"><img src="/assets/img/chipmunk.png" alt="Confused Chipmunk coloring page"></span>
+          <span class="meta">
+            <strong>Confused Chipmunk (PDF)</strong>
+            <em>1 page • US Letter</em>
+          </span>
+          <span class="action btn">Open PDF</span>
+        </a>
+    
+        <!-- Wise Owlbot -->
+        <a class="resource-card" href="/assets/pdfs/coloring-owl.pdf" target="_blank" rel="noopener">
+          <span class="thumb"><img src="/assets/img/owlbot.png" alt="Wise Owlbot coloring page"></span>
+          <span class="meta">
+            <strong>Wise Owlbot (PDF)</strong>
+            <em>1 page • US Letter</em>
+          </span>
+          <span class="action btn">Open PDF</span>
+        </a>
+      </div>
+    </div>
       <div id="research-block" hidden>
         <h3 id="research">Academic Papers & Resources</h3>
         <p class="sub">A short, friendly bibliography. Each item has a quick note for grown-ups and a kid-friendly takeaway.</p>
