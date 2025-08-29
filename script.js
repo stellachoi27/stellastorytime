@@ -73,3 +73,25 @@ document.getElementById('year').textContent = new Date().getFullYear();
     if (lastTrigger) lastTrigger.focus();
   });
 })();
+
+/* ===== Research list toggle ===== */
+(function(){
+  const btn   = document.getElementById('toggle-research');
+  const block = document.getElementById('research-block');
+  if (!btn || !block) return;
+
+  function setOpen(open){
+    btn.setAttribute('aria-expanded', String(open));
+    btn.textContent = open ? 'Hide the list' : 'View the list';
+    block.hidden = !open;
+    if (open) block.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  btn.addEventListener('click', () => {
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    setOpen(!open);
+  });
+
+  // If someone visits with #research in the URL, open the list automatically
+  if (location.hash === '#research') setOpen(true);
+})();
