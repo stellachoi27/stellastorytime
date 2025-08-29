@@ -269,3 +269,29 @@ h2{font-family:"Chaloops", cursive; font-size:clamp(28px,3.2vw,40px); margin:0 0
   padding:4px 8px;
   font-size:.9rem;
 }
+
+/* ===== Activities → Academic Papers & Resources ===== */
+.paper-list{
+  list-style: none; padding: 0; margin: 12px 0 0;
+  display: grid; gap: 12px;
+}
+.paper{
+  background: var(--paper);
+  border: 1px solid rgba(0,0,0,.06);
+  border-radius: 12px;
+  padding: 12px 14px;
+  box-shadow: var(--shadow);
+}
+.paper-head{
+  display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline;
+  margin-bottom: 6px;
+}
+.paper-title{ font-weight: 700; }
+.paper-meta{ color: var(--muted); font-size: .92rem; }
+.paper-tags{ display: flex; gap: 8px; flex-wrap: wrap; margin: 6px 0; }
+.paper-tags span{
+  background: #eef5ff; color: #00304d;
+  border-radius: 999px; padding: 2px 8px; font-size: .85rem;
+}
+.for-grownups, .for-kids{ margin: .4rem 0; }
+.links a{ text-decoration: underline; }
