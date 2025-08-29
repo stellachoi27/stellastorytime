@@ -93,12 +93,6 @@ h2{font-family:"Chaloops", cursive; font-size:clamp(28px,3.2vw,40px); margin:0 0
 /* Footer */
 .site-footer{padding:26px 20px; text-align:center; color:#5a6a86}
 
-/* Dialog quiz */
-dialog{border:none; border-radius:16px; padding:18px 18px 24px; width:min(560px, 92vw); box-shadow:var(--shadow)}
-dialog::backdrop{background:rgba(0,0,0,.4)}
-.quiz-actions{display:flex; gap:12px; margin:12px 0}
-.quiz-answer{margin:8px 0 0; color:#173a0b; background:#e9f7e6; padding:10px 12px; border-radius:10px}
-
 /* Responsive */
 @media (max-width:900px){
   .hero{grid-template-columns:1fr; padding-top:24px}
